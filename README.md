@@ -1,2 +1,2 @@
 # leetcode
-leetcode practice
+leetcode practice in Java
