@@ -16,6 +16,9 @@ class Solution {
             return;
         }
 
+        //in dfs, 1. append
+        //        2. go to next layer
+        //        3. remove
         if (left > 0) {
             string.append('(');
             dfs(result, string, left-1, right);
