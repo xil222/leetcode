@@ -69,7 +69,7 @@ public class Codec {
         String[] arr = data.split(",");
         TreeNode root = null;
         for (String s: arr) {
-            buildBST(root, Integer.parseInt(s));
+            root = buildBST(root, Integer.parseInt(s));
         }
         return root;
     }
