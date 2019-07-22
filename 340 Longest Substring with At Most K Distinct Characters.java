@@ -95,3 +95,40 @@ class Solution {
         return maxLen;
     }
 }
+
+//this is same as implementation above, but use hashMap with O(n) time complexity
+//but speed much slower, 17ms 22.88%
+class Solution {
+    public int lengthOfLongestSubstringKDistinct(String s, int k) {
+
+        if (s.length() < k) {
+            return s.length();
+        }
+
+        int start = 0;
+        int maxLen = 0;
+        int cnt = 0;
+        Map<Character, Integer> map = new HashMap<>();
+
+        for (int end = 0; end < s.length(); end++) {
+            char c = s.charAt(end);
+            if (!map.containsKey(c)) {
+                map.put(c, 0);
+            }
+
+            if (map.get(c) == 0) {
+                cnt++;
+            }
+            map.put(c, map.get(c)+1);
+            while (cnt > k) {
+                map.put(s.charAt(start), map.get(s.charAt(start)) -1);
+                if (map.get(s.charAt(start)) == 0) {
+                    cnt--;
+                }
+                start++;
+            }
+            maxLen = Math.max(end - start + 1, maxLen);
+        }
+        return maxLen;
+    }
+}
