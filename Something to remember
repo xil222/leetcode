@@ -1,0 +1,8 @@
+1. when doing binary search while loop condition (left < right)
+--> return mid -->
+--> left = mid + 1;
+--> right = mid;
+can guarantee finding a solution
+
+2. when creating new Comparator in order to correct get compare max and min
+need to use override compare function say descending: (b - a) to b.compareTo(a)
