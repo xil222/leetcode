@@ -6,3 +6,8 @@ can guarantee finding a solution
 
 2. when creating new Comparator in order to correct get compare max and min
 need to use override compare function say descending: (b - a) to b.compareTo(a)
+
+3. another way to set up binary search when not necessary find (left < right)
+when find left don't satisfy but could only set left = mid
+do check mid + 1 satisfy, then do left = mid + 1.
+then we got cases for mid, (only set left = mid) left = mid + 1, right = mid - 1.
