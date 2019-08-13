@@ -11,3 +11,12 @@ need to use override compare function say descending: (b - a) to b.compareTo(a)
 when find left don't satisfy but could only set left = mid
 do check mid + 1 satisfy, then do left = mid + 1.
 then we got cases for mid, (only set left = mid) left = mid + 1, right = mid - 1.
+
+4. when using hashMap with String is the val, use equals to compare the string instead of
+using '==' notion.
+
+5. A very nice data structure in Java:
+List<int[]>[] xxx = new ArrayList[num];
+it is a array, in each bucket of array is a list object containing int[](just a self defined Obj)
+the advantage is bucket the list can add multiple int[] this data structure is very nice using in
+bucket sort when the data type we need to sort is quite complicated.
