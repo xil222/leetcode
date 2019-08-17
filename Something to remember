@@ -20,3 +20,6 @@ List<int[]>[] xxx = new ArrayList[num];
 it is a array, in each bucket of array is a list object containing int[](just a self defined Obj)
 the advantage is bucket the list can add multiple int[] this data structure is very nice using in
 bucket sort when the data type we need to sort is quite complicated.
+
+6. Convert set to String array in java
+String[] array = set.toArray(new String[0]);
