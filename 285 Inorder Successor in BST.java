@@ -8,6 +8,7 @@
  * }
  */
 class Solution {
+    //since this is BST, to find the next greater
     public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
         //use inOrder traversal, recording the prev val and current val
         if (root == null) {

@@ -19,7 +19,6 @@ class Solution {
                 map.put(s2, new HashSet<String>());
             }
             map.get(s2).add(s1);
-
         }
 
         for (int i = 0; i < words1.length; i++) {
@@ -33,6 +32,5 @@ class Solution {
         }
 
         return true;
-
     }
 }

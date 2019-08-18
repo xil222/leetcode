@@ -6,7 +6,6 @@
 
 class Solution {
     public int[] assignBikes(int[][] workers, int[][] bikes) {
-
         //set up pq, sorting order using distance asd, worker idx asd, bike idx asd
         //use int[]{manhattan distance, worker idx, bike idx}
 
@@ -82,6 +81,10 @@ class Solution {
                     bikeIdx[bIdx] = true;
                     count++;
                 }
+            }
+
+            if (count == workers.length) {
+                break;
             }
         }
 

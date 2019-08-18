@@ -26,6 +26,7 @@ class Solution {
         //since we want to find the shortest one,
         //once found, need to return
         //otherwise, remove the redundent characters
+        //since we need to find the optimal through dfs, requires remove unnecessary items
         String tmp = sb.substring(sb.length()+1-n);
         for (char i = '0'; i < '0' + k; i++) {
             String newString = tmp + i;

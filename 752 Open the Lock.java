@@ -1,4 +1,5 @@
 class Solution {
+    //use bfs on this problem
     public int openLock(String[] deadends, String target) {
         Set<String> set = new HashSet<>();
         for (int i = 0; i < deadends.length; i++) {
@@ -26,6 +27,7 @@ class Solution {
                 for (int j = 0; j < 4; j++) {
                     char c = sb.charAt(j);
                     //we need to add condition of turning '0' to '9' and turning '9' to '0'
+                    //remember these two lines are useful representing all update possibilities
                     String newtmp1 = sb.substring(0, j) + (c == '0'? 9: c - '0' - 1) + sb.substring(j+1);
                     String newtmp2 = sb.substring(0, j) + (c == '9'? 0: c - '0' + 1) + sb.substring(j+1);
                     if (!set.contains(newtmp1) && !visited.contains(newtmp1)) {
