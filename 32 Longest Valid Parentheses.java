@@ -26,7 +26,6 @@ class Solution {
     }
 }
 
-
 //use dp method 6ms O(n), beats 100% + review
 class Solution {
     public int longestValidParentheses(String s) {

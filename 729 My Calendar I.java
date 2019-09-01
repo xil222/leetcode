@@ -3,6 +3,7 @@ class MyCalendar {
     //get the next > start compare with end
     //log(n) time complexity
     //key: start, val: end
+    //we are maintaining a valid treeMap always
     TreeMap<Integer, Integer> map;
     public MyCalendar() {
         map = new TreeMap<>();

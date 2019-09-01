@@ -1,9 +1,5 @@
 class Solution {
-    // traditional approach is that:
-    // 0           2n-2            4n-4  --> 2n-2
-    // 1     2n-3  2n-1         3n-2
-    // 2  n       2n   3n-2
-    // n-2         3n-2
+    //The idea is updating multiple lines at the same time
     public String convert(String s, int numRows) {
         char[] c = s.toCharArray();
         int len = c.length;

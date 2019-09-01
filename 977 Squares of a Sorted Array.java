@@ -1,6 +1,5 @@
 class Solution {
     public int[] sortedSquares(int[] A) {
-
         int[] res = new int[A.length];
         int start = 0;
         int end = A.length - 1;
