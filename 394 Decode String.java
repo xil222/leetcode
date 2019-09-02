@@ -1,4 +1,42 @@
 class Solution {
+    public String decodeString(String s) {
+
+        Stack<Integer> nums = new Stack<>();
+        Stack<String> strings = new Stack<>();
+
+        //if number isDigit --> keep increasing stacking
+        //else if '[' --> put previous string and number to stack
+        //else if character --> keep adding to res
+        //else if ']' --> pop.String + number * res
+
+        String res = "";
+        int num = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isDigit(s.charAt(i))) {
+                num = num * 10 + (int) (s.charAt(i) - '0');
+            } else if (s.charAt(i) == '[') {
+                nums.push(num);
+                strings.push(res);
+                res = "";
+                num = 0;
+            } else if (s.charAt(i) == ']') {
+                StringBuilder sb = new StringBuilder(strings.pop());
+                int cnt = nums.pop();
+                for (int idx = 0; idx < cnt; idx++) {
+                    sb.append(res);
+                }
+                res = sb.toString();
+            } else {
+                res += s.charAt(i);
+            }
+        }
+        return res;
+    }
+}
+
+
+class Solution {
     //Time Complexity: O(n)
     public String decodeString(String s) {
         //this is a stack problem
