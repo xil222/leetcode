@@ -95,3 +95,99 @@ class Solution {
         return Math.abs(a[0]-b[0]) + Math.abs(a[1] - b[1]);
     }
 }
+
+
+class Solution {
+    //Time Complexity O(mnlog(mn))
+    //naive way to solving this problem
+    //using PriorityQueue to solve this problem
+    //storing all worker * bike pairs
+    //with Manhattan Distance increasing,
+    //worker index increasing, bike index increasing
+
+    public int[] assignBikes(int[][] workers, int[][] bikes) {
+        //int[] storing as Manhattan distance, workIdx, bikeIdx
+        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] a, int[] b) {
+                if (a[0] == b[0] && a[1] == b[1]) {
+                    return a[2] - b[2];
+                } else if (a[0] == b[0]) {
+                    return a[1] - b[1];
+                } else {
+                    return a[0] - b[0];
+                }
+            }
+        });
+
+        for (int i = 0; i < workers.length; i++) {
+            for (int j = 0; j < bikes.length; j++) {
+                int dis = calDistance(workers[i], bikes[j]);
+                pq.offer(new int[]{dis, i, j});
+            }
+        }
+
+        Set<Integer> visitedBikes = new HashSet<>();
+        int[] res = new int[workers.length];
+        Arrays.fill(res, -1);
+        int count = 0;
+
+        while (count < res.length) {
+            int[] tmp = pq.poll();
+            if (res[tmp[1]] == -1 && visitedBikes.add(tmp[2])) {
+                res[tmp[1]] = tmp[2];
+                count++;
+            }
+        }
+
+        return res;
+    }
+
+    private int calDistance(int[] a, int[] b) {
+        return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
+    }
+}
+
+class Solution {
+    //Time Complexity O(mn)
+    public int[] assignBikes(int[][] workers, int[][] bikes) {
+        //max worker and bike distance is 2000
+
+        List<int[]>[] buckets = new ArrayList[2001];
+        int[] res = new int[workers.length];
+        boolean[] visited = new boolean[bikes.length];
+
+        for (int i = 0; i < workers.length; i++) {
+            for (int j = 0; j < bikes.length; j++) {
+                int dis = calDistance(workers[i], bikes[j]);
+                if (buckets[dis] == null) {
+                    buckets[dis] = new ArrayList<int[]>();
+                }
+                buckets[dis].add(new int[] {i, j});
+            }
+        }
+
+        Arrays.fill(res, -1);
+        int count = 0;
+
+        for (int i = 0; i <= 2000; i++) {
+            if (buckets[i] == null) {
+                continue;
+            } else {
+                for (int[] tmp: buckets[i]) {
+                    if (res[tmp[0]] == -1 && !visited[tmp[1]]) {
+                        res[tmp[0]] = tmp[1];
+                        visited[tmp[1]] = true;
+                        count++;
+                    }
+                }
+            }
+        }
+
+        return res;
+    }
+
+    private int calDistance(int[] a, int[] b) {
+        return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
+    }
+}
