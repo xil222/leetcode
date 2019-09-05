@@ -40,3 +40,35 @@ class Solution {
         return Math.abs(worker[0] - bike[0]) + Math.abs(worker[1] - bike[1]);
     }
 }
+
+
+class Solution {
+    public int assignBikes(int[][] workers, int[][] bikes) {
+        int[] minDis = new int[]{Integer.MAX_VALUE};
+        dfs(workers, bikes, 0, minDis, new boolean[bikes.length], 0);
+        return minDis[0];
+    }
+
+    private void dfs(int[][] workers, int[][] bikes, int idx, int[] minDis, boolean[] visited, int dis) {
+        if (idx == workers.length) {
+            minDis[0] = Math.min(minDis[0], dis);
+            return;
+        }
+
+        for (int i = 0; i < bikes.length; i++) {
+            if (visited[i]) {
+                continue;
+            }
+
+            visited[i] = true;
+            int dd = calDis(workers[idx], bikes[i]);
+            dfs(workers, bikes, idx + 1, minDis, visited, dis + dd);
+            visited[i] = false;
+        }
+    }
+
+    private int calDis(int[] a, int[] b) {
+        return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
+    }
+
+}

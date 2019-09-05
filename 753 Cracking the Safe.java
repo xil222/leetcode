@@ -1,5 +1,49 @@
 class Solution {
     public String crackSafe(int n, int k) {
+        //k ^ n combinations
+        //when our substring covers all the possibilities
+        //and is the shortest one, we end
+        //so our approach is by appending one by one starting
+        //from the smallest possibility 00000s
+        int target = (int) Math.pow(k, n);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++)
+            sb.append('0');
+
+        Set<String> visited = new HashSet<>();
+        visited.add(sb.toString());
+        dfs(sb, n, visited, k, target);
+        return sb.toString();
+    }
+
+    //the first answer we find is the shortest one as we starts from 00000 and appending gradually larger,
+    //each new number we append is new otherwise we remove it and move back
+    private boolean dfs(StringBuilder sb, int n, Set<String> visited, int k, int target) {
+        if (visited.size() == target) {
+            return true;
+        }
+
+        String sub = sb.substring(sb.length() - n + 1, sb.length());
+        for (int i = 0; i < k; i++) {
+            String next = sub + i;
+            if (!visited.contains(next)) {
+                visited.add(next);
+                sb.append(i);
+                if (dfs(sb, n, visited, k, target)) {
+                    return true;
+                }
+                sb.deleteCharAt(sb.length()-1);
+                visited.remove(next);
+            }
+        }
+        return false;
+    }
+
+
+}
+
+class Solution {
+    public String crackSafe(int n, int k) {
         //options decided by k and n
         //total combinations number is k ^ n
         StringBuilder sb = new StringBuilder();

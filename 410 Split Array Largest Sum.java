@@ -1,3 +1,31 @@
+//This problem is looking for the minMax
+class Solution {
+    public int splitArray(int[] nums, int m) {
+
+        //dp[i][j] represents the minMax
+        //of nums with size j and (i+1) splits
+        int[][] dp = new int[m][nums.length];
+
+        dp[0][0] = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            dp[0][i] = dp[0][i-1] + nums[i];
+        }
+
+        for (int i = 1; i < m; i++) {
+            for (int j = i; j < nums.length; j++ ) {
+                int min = Integer.MAX_VALUE;
+                for (int k = 0; k < j; k++) {
+                    //find the max comparing between using i-1 stack min, with the position k~j, compare with the previous minMax
+                    min = Math.min(min, Math.max(dp[0][j] - dp[0][k], dp[i-1][k]));
+                }
+                dp[i][j] = min;
+            }
+        }
+
+        return dp[m-1][nums.length-1];
+    }
+}
+
 //binary search approach
 //this is very nice solution time complexity depending on the totalSum and length of array
 //assume average val is n, length is m

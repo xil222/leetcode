@@ -1,3 +1,52 @@
+class Solution {
+    public int removeStones(int[][] stones) {
+        //This is a union find problem so basically
+        //lets build the graph and find number of unions
+        //then substract total array number by
+        //the number of unions
+        //the ans is number of new connections between nodes
+
+        //one way is using index to implement the mapping
+        //first map each index to itself
+        int cnt = 0;
+        int[] indexes = new int[stones.length];
+        for (int i = 0; i < stones.length; i++) {
+            indexes[i] = i;
+        }
+
+        for (int i = 0; i < stones.length; i++) {
+            for (int j = i + 1; j < stones.length; j++) {
+                if (stones[i][0] != stones[j][0] && stones[i][1] != stones[j][1]) {
+                    continue;
+                }
+
+                //then find root for both
+                int idx1 = find(indexes, i);
+                int idx2 = find(indexes, j);
+
+                //means their connections have been built
+                if (idx1 == idx2) {
+                    continue;
+                } else {
+                    indexes[idx2] = idx1;
+                    cnt++;
+                }
+
+            }
+        }
+
+        return cnt;
+    }
+
+    private int find(int[] indexes, int idx) {
+        while (indexes[idx] != idx) {
+            idx = indexes[idx];
+        }
+        return idx;
+    }
+
+}
+
 //use string to realize union find but too slow
 class Solution {
 
