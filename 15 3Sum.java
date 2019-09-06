@@ -1,4 +1,54 @@
 class Solution {
+    //time complexity is O(n^2)
+    public List<List<Integer>> threeSum(int[] nums) {
+        if (nums.length < 3) {
+            return new ArrayList<List<Integer>>();
+        }
+
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+
+        //fix the head pointer, rest two pointers
+        //moving all 3 indexes make sure all of them not duplicate
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i > 0 && nums[i] == nums[i-1]) {
+                continue;
+            }
+
+            int start = i + 1;
+            int end = nums.length - 1;
+            int target = -nums[i];
+
+            //3 cases:
+            //  nums[start] + nums[end] = target
+            //  nums[start] + nums[end] < target
+            //  nums[start] + nums[end] > target
+            while (start < end) {
+                int sum = nums[start] + nums[end];
+                if (sum == target) {
+                    List<Integer> tmp = new ArrayList<>(Arrays.asList(nums[i], nums[start], nums[end]));
+                    result.add(tmp);
+                    start++;
+                    end--; // we want to remove all duplicates
+                    while (start < end && nums[start] == nums[start-1]) {
+                        start++;
+                    }
+
+                    while (start < end && nums[end] == nums[end+1]) {
+                        end--;
+                    }
+                } else if (sum < target) {
+                    start++;
+                } else {
+                    end--;
+                }
+            }
+        }
+        return result;
+    }
+}
+
+class Solution {
     //O(n^2) time complexity 55.5% -> 61.3% after improvement
     public List<List<Integer>> threeSum(int[] nums) {
         if (nums.length < 3)

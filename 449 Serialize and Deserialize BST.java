@@ -1,3 +1,57 @@
+public class Codec {
+    // since this is a BST, just make sure when construct the tree, its layer by layer
+    // Encodes a tree to a single string.
+    // The idea of the problem is consistently rebuilding on the same tree.
+    // Time complexity is O(nlogn)
+    public String serialize(TreeNode root) {
+        if (root == null) {
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        dfs(root, sb);
+        return sb.toString();
+    }
+
+    private void dfs(TreeNode root, StringBuilder sb) {
+        if (root == null) {
+            return;
+        }
+
+        sb.append(root.val).append(",");
+        dfs(root.left, sb);
+        dfs(root.right, sb);
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if (data.isEmpty()) {
+            return null;
+        }
+
+        TreeNode root = null;
+        String[] arr = data.split(",");
+
+        for (String str: arr) {
+            root = buildBST(root, Integer.valueOf(str));
+        }
+        return root;
+    }
+
+    private TreeNode buildBST(TreeNode root, int val) {
+        if (root == null) {
+            return new TreeNode(val);
+        }
+
+        if (root.val < val) {
+            root.right = buildBST(root.right, val);
+        } else {
+            root.left = buildBST(root.left, val);
+        }
+        return root;
+    }
+}
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -20,7 +74,7 @@ public class Codec {
 
     public TreeNode deserialize(String data) {
         String[] arr = data.split(",");
-        return deserialize(strs, new int[]{0}); //use a parameter to record the index pos
+        return deserialize(arr , new int[]{0}); //use a parameter to record the index pos
     }
 
     //use array to globally control the index, use index, mid + left + right
@@ -86,68 +140,5 @@ public class Codec {
 }
 
 
-//This approach is wrong, because it does not provide '#' to separate
-public class Codec {
-    // Encodes a tree to a single string.
-    public String serialize(TreeNode root) {
-        if (root == null) {
-            return "";
-        }
-
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode curr = root;
-        StringBuilder result = new StringBuilder();
-
-        while (!stack.isEmpty() || curr != null) {
-            if (curr != null) {
-                stack.push(curr);
-                curr = curr.left;
-            } else {
-                curr = stack.pop();
-                result.append(Integer.toString(curr.val));
-                result.append(",");
-                curr = curr.right;
-            }
-        }
-
-        while (result.charAt(result.length()-1) == ',')
-            result.removeCharAt(result.length()-1);
-
-        return result;
-    }
-
-    // Decodes your encoded data to tree.
-    public TreeNode deserialize(String data) {
-        if (data == "") {
-            return null;
-        }
-
-        String[] numSet = data.split(',');
-        TreeNode root = new TreeNode(Integer.valueOf(numSet[0]));
-        Stack<TreeNode> stack = new Stack<>();
-        stack.push(root);
-
-        for (int i = 1; i < numSet.length; i++) {
-            int val = Integer.valueOf(numSet[i]);
-            TreeNode node = new TreeNode(val);
-            if (val < stack.peek().val) {
-                stack.peek().left = node;
-                stack.push(node);
-            } else {
-                TreeNode prev = stack.pop();
-                while (prev.val < val) {
-                    prev = stack.pop();
-                }
-                prev.right = node;
-                stack.push(node);
-            }
-        }
-        return root;
-    }
-}
-
-// Your Codec object will be instantiated and called as such:
-// Codec codec = new Codec();
-// codec.deserialize(codec.serialize(root));
 
 
