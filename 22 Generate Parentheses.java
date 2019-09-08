@@ -1,4 +1,34 @@
 class Solution {
+    //condition for valid --> at each position the left parenthesis >= right parenthesis
+    //Time Complexity: O(2^n)
+    public List<String> generateParenthesis(int n) {
+        List<String> result = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        dfs(result, sb, n, n);
+        return result;
+    }
+
+    private void dfs(List<String> result, StringBuilder sb, int left, int right) {
+        if (left == 0 && right == 0) {
+            result.add(sb.toString());
+            return;
+        }
+
+        if (left > 0) {
+            sb.append('(');
+            dfs(result, sb, left - 1, right);
+            sb.deleteCharAt(sb.length()-1);
+        }
+
+        if (right > left) {
+            sb.append(')');
+            dfs(result, sb, left, right - 1);
+            sb.deleteCharAt(sb.length()-1);
+        }
+    }
+}
+
+class Solution {
     public List<String> generateParenthesis(int n) {
         //need to record number of left parenthesis, right parenthesis
         //in this kind of problem add data type to one list with the dfs

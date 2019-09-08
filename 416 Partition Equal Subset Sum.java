@@ -24,6 +24,8 @@ class Solution {
 
         for (int i = 0; i < nums.length; i++) {
             //go from large to small because each value can only be used once
+            //has to go in reverse direction, because each item only use once
+            //prevent duplicate recursive using one element
             for (int j = target; j >= nums[i]; j--) {
                 dp[j] = dp[j] || dp[j - nums[i]];
             }
