@@ -1,42 +1,48 @@
 class Solution {
-    //O(nlog(n)) time complexity
-    //O(n) space complexity
-    public int networkDelayTime(int[][] times, int N, int K) {
-        //this problem needs bfs to expand from the
-        //beginning node, while requires dijikstra algorithm
+    //Time: O(V + E)
+    //Space: O(V + E)
+    //The goal of this problem is be able to iterate all the nodes
+    //according to a global time ascending sequence
 
-        //key: node, val: (key: node, val: distance)
+    public int networkDelayTime(int[][] times, int N, int K) {
+
+        //key: source node
+        //val: <key: target node, val: delay time>
         Map<Integer, Map<Integer, Integer>> map = new HashMap<>();
-        boolean[] visited = new boolean[N + 1];
-        for (int i = 0; i < times.length; i++) {
-            if (!map.containsKey(times[i][0])) {
-                map.put(times[i][0], new HashMap<>());
+        for (int[] time: times) {
+            if (!map.containsKey(time[0])) {
+                map.put(time[0], new HashMap<Integer, Integer>());
             }
-            map.get(times[i][0]).put(times[i][1], times[i][2]);
+            map.get(time[0]).put(time[1], time[2]);
         }
 
-        //algorithm sort by distance nlog(n) time complexity
-        //keep track of the totalDistance, only update when
-        //this node has been expanded
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> (a[0] - b[0]));
-        pq.add(new int[]{0, K});
-        int res = 0;
+        //put visited node and time
+        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>(){
+            @Override
+            public int compare(int[] a, int[] b) {
+                return a[1] - b[1];
+            }
+        });
+
+        int count = N; //to check whether all nodes been visited
+        int time = 0;
+        boolean[] expanded = new boolean[N+1];
+        pq.offer(new int[]{K, 0});
 
         while (!pq.isEmpty()) {
-            int[] cur = pq.poll();
-            int currDis = cur[0];
-            int node = cur[1];
-            if (visited[node]) continue;
-            visited[node] = true;
-            N--;
-            res = currDis;
-            if (map.containsKey(node)) {
-                for (Integer next: map.get(node).keySet()) {
-                    pq.add(new int[]{currDis + map.get(node).get(next), next});
+            int[] tmp = pq.poll();
+            if (expanded[tmp[0]]) continue;
+            expanded[tmp[0]] = true;
+            time = tmp[1];
+            count--;
+            if (map.containsKey(tmp[0])) {
+                Map<Integer, Integer> target = map.get(tmp[0]);
+                for (Integer d: target.keySet()) {
+                    pq.offer(new int[]{d, target.get(d) + time});
                 }
             }
         }
 
-        return N == 0? res: -1;
+        return count == 0? time: -1;
     }
 }

@@ -8,8 +8,15 @@
  * }
  */
 public class Codec {
+    //goal is to represent all the nodes including the null
+    //from a top down level
+    //b/c we need those nodes to represent children
 
-    // Encodes a tree to a single string. Time beats 87%, Space beats 37.88%
+    //to convert from string to tree
+    //from top to bot, the easiest way to construct
+    //the forward index is the parent of child index
+    //which is at the latter index
+    //which is preOrder traversal constructing the string
     // O(n) time for serializing the tree
     public String serialize(TreeNode root) {
         if (root == null) {
