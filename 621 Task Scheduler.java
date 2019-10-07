@@ -1,7 +1,6 @@
 class Solution {
     //greedy approach
     public int leastInterval(char[] tasks, int n) {
-
         int[] count = new int[26];
 
         for (int i = 0; i < tasks.length ; i++) {
@@ -10,7 +9,7 @@ class Solution {
 
         Arrays.sort(count);
 
-        int maxLen = count[25] * (n + 1) - n;
+        int maxLen = count[25] * (n + 1) - n; //use maxFreq word to separate all other words
         int num = 25;
         while (num >= 1 && count[num-1] == count[num]) {
             num--;
